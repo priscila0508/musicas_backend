@@ -38,11 +38,26 @@ app.post("/cadastrar", (request, response) => {
 
     sql.query(comandoInsert, [titulo, artista, genero, ano, duracao], (error) => { 
 
-        if (error){
+        if (error) {
             console.log(error)
-            return response.status(500).json({ mansagem: "Erro ao cadastrar música!"})
+            return
         }
         response.status(201).json({mansagem: "Música cadastrada com sucesso!"})
+    })
+})
+
+app.delete("/apagar/:id", (request, response) => { 
+    const { id } = request.params
+
+    const comandoDelete = "DELETE FROM musicas_priscila WHERE id = ?"
+
+    sql.query(comandoDelete, [id], (error) => {
+        if (error) {
+            console.log(error)
+            return
+        }
+
+        response.json({ mensagem: "Música apagada com sucesso!" })
     })
 })
 
